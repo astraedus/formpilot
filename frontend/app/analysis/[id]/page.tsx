@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import FieldAnnotation from "@/components/FieldAnnotation";
 import InstructionsList from "@/components/InstructionsList";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8003";
 
 interface Field {
   field_name: string;
