@@ -84,13 +84,13 @@ async def analyze_form(image_path: str, user_context: str) -> tuple[list[dict], 
         (fields, summary, is_mock) tuple.
         is_mock=True when falling back to sample data.
     """
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = os.getenv("GOOGLE_API_KEY")
 
     if not api_key or api_key == "your_gemini_api_key_here":
-        logger.warning("No GEMINI_API_KEY set — returning mock analysis")
+        logger.warning("No GOOGLE_API_KEY set — returning mock analysis")
         summary = (
             "Mock analysis: 5 fields detected in this sample form. "
-            "Set GEMINI_API_KEY to enable real Gemini Vision analysis."
+            "Set GOOGLE_API_KEY to enable real Gemini Vision analysis."
         )
         return MOCK_ANALYSIS, summary, True
 
@@ -127,7 +127,7 @@ Return ONLY a valid JSON array of objects with these exact keys:
 Return only the JSON array, no markdown, no explanation."""
 
         response = client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-2.5-flash",
             contents=[
                 types.Part.from_bytes(data=image_bytes, mime_type=mime_type),
                 prompt,
