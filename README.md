@@ -5,10 +5,27 @@ Smart form navigator powered by Gemini Vision. Upload a screenshot of any form a
 ## Architecture
 
 ```
-formpilot/
-  backend/    Python FastAPI + Gemini Vision + SQLite
-  frontend/   Next.js 14 (App Router) + Tailwind CSS
+                    ┌─────────────────────────────────────────────┐
+                    │              Google Cloud                    │
+                    │                                             │
+┌──────────┐       │  ┌──────────────┐    ┌───────────────────┐  │
+│  Browser  │       │  │  Cloud Run   │    │  Gemini 2.5 Flash │  │
+│           │──────►│  │  (FastAPI)   │───►│  Vision API       │  │
+│ Next.js   │       │  │              │    │                   │  │
+│ Upload    │       │  │  POST        │    │  Screenshot       │  │
+│ Screenshot│       │  │  /api/analyze│◄───│  Analysis +       │  │
+│           │◄──────│  │              │    │  Field Detection  │  │
+│ View      │       │  │  SQLite DB   │    │  + Fill Suggest   │  │
+│ Analysis  │       │  │  Uploads dir │    └───────────────────┘  │
+└──────────┘       │  └──────────────┘                           │
+                   │                                             │
+                   │  ┌──────────────┐                           │
+                   │  │ Secret Mgr   │  API Key Storage          │
+                   │  └──────────────┘                           │
+                   └─────────────────────────────────────────────┘
 ```
+
+**Pipeline**: Upload form screenshot + describe your situation -> Gemini Vision analyzes every field -> Returns field-by-field instructions, suggested values, and warnings
 
 ## Quick Start
 
@@ -95,9 +112,28 @@ Response:
 |----------|---------|-------------|
 | `NEXT_PUBLIC_API_URL` | `http://localhost:8000` | Backend API base URL |
 
+## Cloud Deployment (IaC)
+
+```bash
+export GOOGLE_API_KEY="your-key"
+export GOOGLE_CLOUD_PROJECT="your-project-id"
+./deploy.sh
+```
+
+Automates: GCP API enablement, Secret Manager, Cloud Build, Cloud Run deploy, Vercel frontend deploy.
+
+## Google Cloud Services Used
+
+| Service | Purpose |
+|---------|---------|
+| Cloud Run | Backend hosting (auto-scaling, serverless) |
+| Cloud Build | Container image building |
+| Secret Manager | API key storage |
+| Generative Language API | Gemini Vision form analysis |
+
 ## Without a Gemini API Key
 
-The backend gracefully falls back to realistic mock analysis data when `GEMINI_API_KEY` is not set. Analyses are labeled "Sample data (no API key)" in the UI. This is useful for frontend development without an API key.
+The backend gracefully falls back to realistic mock analysis data when `GOOGLE_API_KEY` is not set. Analyses are labeled "Sample data (no API key)" in the UI.
 
 Get a free Gemini API key at https://aistudio.google.com/apikey
 
