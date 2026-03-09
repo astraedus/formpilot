@@ -15,26 +15,7 @@ Smart form navigator powered by Gemini Vision. Upload a screenshot of any form a
 
 ## Architecture
 
-```
-                    ┌─────────────────────────────────────────────┐
-                    │              Google Cloud                    │
-                    │                                             │
-┌──────────┐       │  ┌──────────────┐    ┌───────────────────┐  │
-│  Browser  │       │  │  Cloud Run   │    │  Gemini 2.5 Flash │  │
-│           │──────►│  │  (FastAPI)   │───►│  Vision API       │  │
-│ Next.js   │       │  │              │    │                   │  │
-│ Upload    │       │  │  POST        │    │  Screenshot       │  │
-│ Screenshot│       │  │  /api/analyze│◄───│  Analysis +       │  │
-│           │◄──────│  │              │    │  Field Detection  │  │
-│ View      │       │  │  SQLite DB   │    │  + Fill Suggest   │  │
-│ Analysis  │       │  │  Uploads dir │    └───────────────────┘  │
-└──────────┘       │  └──────────────┘                           │
-                   │                                             │
-                   │  ┌──────────────┐                           │
-                   │  │ Secret Mgr   │  API Key Storage          │
-                   │  └──────────────┘                           │
-                   └─────────────────────────────────────────────┘
-```
+![Architecture](docs/architecture.png)
 
 **Pipeline**: Upload form screenshot + describe your situation -> Gemini Vision analyzes every field -> Returns field-by-field instructions, suggested values, and warnings
 
