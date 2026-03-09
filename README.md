@@ -2,6 +2,17 @@
 
 Smart form navigator powered by Gemini Vision. Upload a screenshot of any form and get field-by-field fill instructions with auto-fill suggestions.
 
+## Live Demo & Links
+
+| | |
+|---|---|
+| **Live App** | [formpilot-ten.vercel.app](https://formpilot-ten.vercel.app) |
+| **Backend API** | [formpilot-api-93135657352.us-central1.run.app](https://formpilot-api-93135657352.us-central1.run.app) |
+| **Demo Video** | [youtu.be/t9K7kGAvduU](https://youtu.be/t9K7kGAvduU) |
+| **Blog Post** | [Building FormPilot: AI-Powered Form Navigation with Gemini Vision](https://dev.to/diven_rastdus_c5af27d68f3/building-formpilot-ai-powered-form-navigation-with-gemini-vision-1gbb) |
+| **DevPost** | [devpost.com/software/formpilot](https://devpost.com/software/formpilot) |
+| **Hackathon** | Gemini Live Agent Challenge 2026 — UI Navigator track |
+
 ## Architecture
 
 ```
