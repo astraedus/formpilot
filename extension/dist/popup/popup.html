@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FormPilot</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="../icons/icon-48.png" alt="FormPilot" class="logo">
+      <h1>FormPilot</h1>
+    </div>
+
+    <div id="state-idle" class="state">
+      <p class="subtitle">AI-powered form guidance & autofill</p>
+      <div class="input-group">
+        <label for="context-input">Tell us about yourself</label>
+        <textarea id="context-input" placeholder="e.g. I'm a 26-year-old Australian software engineer applying for an H-1B visa. Employer: Acme Corp, San Francisco." rows="4"></textarea>
+      </div>
+      <button id="analyze-btn" class="btn-primary">Analyze This Page</button>
+    </div>
+
+    <div id="state-loading" class="state hidden">
+      <div class="spinner"></div>
+      <p class="loading-text">Analyzing form...</p>
+      <p class="loading-sub">Capturing page & extracting fields</p>
+    </div>
+
+    <div id="state-success" class="state hidden">
+      <div class="success-icon">&#10003;</div>
+      <p class="success-text"><span id="field-count">0</span> fields analyzed</p>
+      <p class="success-sub">Tooltips are now visible on the page. Click any numbered circle for guidance.</p>
+      <button id="autofill-btn" class="btn-primary">Autofill All Fields</button>
+      <button id="clear-btn" class="btn-secondary">Clear Overlays</button>
+      <button id="reanalyze-btn" class="btn-secondary">Re-analyze</button>
+    </div>
+
+    <div id="state-error" class="state hidden">
+      <div class="error-icon">&#10007;</div>
+      <p class="error-text" id="error-message">Something went wrong</p>
+      <button id="retry-btn" class="btn-secondary">Try Again</button>
+    </div>
+  </div>
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

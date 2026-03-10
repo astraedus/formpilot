@@ -107,18 +107,22 @@ async def analyze_form(image_path: str, user_context: str) -> tuple[list[dict], 
         mime_map = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".gif": "image/gif", ".webp": "image/webp"}
         mime_type = mime_map.get(ext, "image/png")
 
-        prompt = f"""Analyze this form screenshot. The user's context: {user_context}
+        prompt = f"""Analyze this form screenshot and provide field-by-field guidance.
 
-For each visible field in the form:
-1. Identify the field name/label
-2. Determine what type of input it expects (text, email, date, select, checkbox, textarea, etc.)
+User context: {user_context}
+
+IMPORTANT: If the user context contains a "DOM_FIELDS:" section, those are the actual form field names/labels/IDs extracted from the webpage. Use those EXACT field names in your response so they can be matched back to the DOM elements. The field_name in your response should match the label or name from DOM_FIELDS as closely as possible.
+
+For each field in the form:
+1. Identify the field using the DOM field label/name if provided, or from the screenshot
+2. Determine the input type (text, email, date, select, checkbox, textarea, tel, number, etc.)
 3. Suggest the correct value based on the user's context
-4. Write clear, concise fill instructions
-5. Flag any fields that need special attention, have gotchas, or might trip users up
+4. Write clear, concise fill instructions explaining what to enter and why
+5. Flag fields that need special attention, have gotchas, or might trip users up
 
 Return ONLY a valid JSON array of objects with these exact keys:
-- field_name (string): the label or name of the field
-- field_type (string): input type (text, email, date, select, checkbox, textarea, tel, number, etc.)
+- field_name (string): the label or name of the field (use exact DOM label if available)
+- field_type (string): input type
 - suggested_value (string or null): what to fill in based on user context
 - instructions (string): step-by-step guidance for this field
 - warning (string or null): any gotcha, edge case, or important note (null if none)
