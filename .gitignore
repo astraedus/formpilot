@@ -43,3 +43,20 @@ Thumbs.db
 *.log
 .env
 __pycache__/
+
+# Internal docs (not for public repo)
+devpost-submission.md
+blog-post.md
+demo/*.mp3
+demo/*.mp4
+demo/*.png
+demo/narration.txt
+demo/v2/
+demo/v3/
+demo/concat.txt
+
+# Chrome test profile (generated browser data)
+test-profile/
+
+# Dev/test scripts
+scripts/

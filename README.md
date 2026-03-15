@@ -59,6 +59,16 @@ Or load the pre-built `extension/dist/` directory directly.
 
 ## Architecture
 
+```mermaid
+graph LR
+    A[Chrome Extension<br/>Popup UI] -->|User context +<br/>Click Analyze| B[Content Script<br/>DOM extraction +<br/>Screenshot capture]
+    B -->|Screenshot + Fields<br/>+ User context| C[Cloud Run API<br/>FastAPI]
+    C -->|Structured prompt| D[Gemini 2.5 Flash<br/>Vision API]
+    D -->|JSON: field guidance,<br/>values, warnings| C
+    C -->|Analysis results| B
+    B -->|Render tooltips +<br/>Autofill| E[Live Form Page<br/>Numbered circles +<br/>One-click fill]
+```
+
 ```
 Chrome Extension (MV3)
   |-- popup/        Context input + Analyze button
